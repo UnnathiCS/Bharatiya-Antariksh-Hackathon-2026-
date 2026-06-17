@@ -69,7 +69,17 @@ def get_arkanetra_css(dark_mode: bool = True) -> str:
 }}
 
 /* Hide default Streamlit chrome */
-#MainMenu, footer, header[data-testid="stHeader"] {{ visibility: hidden; }}
+#MainMenu, footer {{ visibility: hidden; }}
+header[data-testid="stHeader"] {{ background: transparent !important; }}
+header[data-testid="stHeader"] > div:first-child {{ visibility: hidden; }}
+
+/* Always keep sidebar toggle button visible and clickable */
+[data-testid="collapsedControl"] {{
+    visibility: visible !important;
+    display: flex !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+}}
 .block-container {{ padding-top: 1.5rem; max-width: 1400px; }}
 
 .stApp {{
