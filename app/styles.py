@@ -68,17 +68,65 @@ def get_arkanetra_css(dark_mode: bool = True) -> str:
     --arkanetra-glass: {glass};
 }}
 
-/* Hide default Streamlit chrome */
+/* Hide default Streamlit chrome — only menu and footer, never the header children */
 #MainMenu, footer {{ visibility: hidden; }}
-header[data-testid="stHeader"] {{ background: transparent !important; }}
-header[data-testid="stHeader"] > div:first-child {{ visibility: hidden; }}
 
-/* Always keep sidebar toggle button visible and clickable */
+/* Make header blend with app background — do NOT hide children (breaks sidebar toggle) */
+header[data-testid="stHeader"] {{
+    background: transparent !important;
+    border-bottom: none !important;
+}}
+
+/* Hide only the Streamlit deploy / toolbar buttons inside the header */
+header[data-testid="stHeader"] [data-testid="stToolbar"],
+header[data-testid="stHeader"] .st-emotion-cache-zq5wmm,
+header[data-testid="stHeader"] .st-emotion-cache-1dp5vir {{
+    display: none !important;
+}}
+
+/* ── Sidebar toggle buttons ── always visible, always clickable ── */
+
+/* Button to RE-OPEN sidebar when collapsed */
 [data-testid="collapsedControl"] {{
     visibility: visible !important;
     display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
     opacity: 1 !important;
     pointer-events: auto !important;
+    z-index: 9999999 !important;
+    background: #22d3ee !important;
+    border: none !important;
+    border-radius: 8px !important;
+    width: 32px !important;
+    height: 32px !important;
+    padding: 0 !important;
+    cursor: pointer !important;
+    box-shadow: 0 2px 12px rgba(34,211,238,0.5) !important;
+}}
+[data-testid="collapsedControl"] svg,
+[data-testid="collapsedControl"] svg path {{
+    fill: #0a121e !important;
+    stroke: none !important;
+    color: #0a121e !important;
+}}
+[data-testid="collapsedControl"]:hover {{
+    background: #67e8f9 !important;
+}}
+
+/* Button to CLOSE/COLLAPSE sidebar when open */
+section[data-testid="stSidebar"] button[kind="header"],
+section[data-testid="stSidebar"] [data-testid="baseButton-headerNoPadding"],
+section[data-testid="stSidebar"] button {{
+    color: #ecf0f4 !important;
+    background: transparent !important;
+    border: none !important;
+    cursor: pointer !important;
+}}
+section[data-testid="stSidebar"] button svg,
+section[data-testid="stSidebar"] button svg path {{
+    fill: #ecf0f4 !important;
+    stroke: none !important;
 }}
 .block-container {{ padding-top: 1.5rem; max-width: 1400px; }}
 

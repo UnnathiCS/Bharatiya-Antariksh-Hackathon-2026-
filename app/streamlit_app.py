@@ -12,6 +12,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
+import streamlit.components.v1 as components
 from PIL import Image
 
 # Path setup
@@ -98,6 +99,47 @@ st.markdown(
     </style>
     """,
     unsafe_allow_html=True,
+)
+
+# Floating sidebar toggle — injected via components.html to bypass Streamlit's HTML sanitizer
+components.html(
+    """
+    <script>
+    (function() {
+        function injectToggle() {
+            var parentDoc = window.parent.document;
+            if (!parentDoc) return;
+            if (parentDoc.getElementById('ark-sidebar-toggle')) return;
+
+            var btn = parentDoc.createElement('button');
+            btn.id = 'ark-sidebar-toggle';
+            btn.title = 'Toggle sidebar';
+            btn.innerText = '☰';
+            btn.style.cssText = [
+                'position:fixed', 'top:10px', 'left:10px', 'z-index:2147483647',
+                'width:38px', 'height:38px', 'background:#22d3ee', 'color:#0a121e',
+                'border:none', 'border-radius:8px', 'font-size:18px', 'font-weight:bold',
+                'cursor:pointer', 'display:flex', 'align-items:center',
+                'justify-content:center', 'box-shadow:0 2px 12px rgba(34,211,238,0.55)',
+                'transition:background 0.2s', 'line-height:1'
+            ].join(';');
+            btn.onmouseover = function() { this.style.background = '#67e8f9'; };
+            btn.onmouseout  = function() { this.style.background = '#22d3ee'; };
+            btn.onclick = function() {
+                var toggle = parentDoc.querySelector('[data-testid="collapsedControl"]');
+                if (!toggle) toggle = parentDoc.querySelector('section[data-testid="stSidebar"] button');
+                if (toggle) toggle.click();
+            };
+            parentDoc.body.appendChild(btn);
+        }
+        // Run immediately and retry briefly to handle Streamlit's deferred render
+        injectToggle();
+        setTimeout(injectToggle, 500);
+        setTimeout(injectToggle, 1500);
+    })();
+    </script>
+    """,
+    height=0,
 )
 
 
