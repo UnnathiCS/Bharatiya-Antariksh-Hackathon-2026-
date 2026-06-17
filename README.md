@@ -1,4 +1,6 @@
-# Urban Heat Mitigation and Cooling Strategies (MVP)-https://arkanetra-2026-unnathics--unnathics.replit.app/
+# Urban Heat Mitigation and Cooling Strategies (MVP)
+
+deployed app ; https://arkanetra-2026-unnathics--unnathics.replit.app/
 
 watch the video : https://drive.google.com/file/d/1zpGkZM-Wa8YI8beFYLP6WpLdHkror07d/view?usp=sharing
 
